@@ -1,0 +1,86 @@
+﻿@model OrderCreateVM
+@{
+    ViewData["Title"] = "CheckOut";
+    double total = 0;
+}
+
+
+<main id="content" class="page-section inner-page-sec-padding-bottom space-db--20">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="checkout-form">
+                    <div class="row row-40">
+                        <div class="col-12">
+                            <h1 class="quick-title">Checkout</h1>
+                        </div>
+                        <div class="col-lg-7 mb--20">
+                            <form id="orderCreate" method="post">
+                                <div id="billing-form" class="mb--40">
+                                    <h4 class="checkout-title">Shipping Address</h4>
+                                    <div class="row">
+                                        <div class="col-md-6 mb--20">
+                                            <label asp-for="Country">Country</label>
+                                            <input class="mb-0 form-control" asp-for="Country" placeholder="Enter Your Country">
+                                            <span class="text-danger" asp-validation-for="Country"></span>
+                                        </div>
+                                        <div class="col-md-6 mb--20">
+                                            <label asp-for="City">City</label>
+                                            <input class="mb-0 form-control" asp-for="City" placeholder="Enter Your City">
+                                            <span class="text-danger" asp-validation-for="City"></span>
+                                        </div>
+                                        <div class="col-md-6 mb--20">
+                                            <label asp-for="State">State</label>
+                                            <input class="mb-0 form-control" asp-for="State" placeholder="Enter Your State">
+                                            <span class="text-danger" asp-validation-for="State"></span>
+                                        </div>
+                                        <div class="col-12 mb--20">
+                                            <label asp-for="Address">Address</label>
+                                            <input class="mb-0 form-control" asp-for="Address" placeholder="Enter Your Address">
+                                            <span class="text-danger" asp-validation-for="Address"></span>
+                                        </div>
+                                        <div class="col-12 mb--20">
+                                            <label asp-for="Note">Order notes</label>
+                                            <textarea class="mb-0 form-control" asp-for="Note" placeholder="Notes about your order."></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-lg-5">
+                            <div class="row">
+                                <!-- Cart Total -->
+                                <div class="col-12">
+                                    <div class="checkout-cart-total">
+                                        <h2 class="checkout-title">YOUR ORDER</h2>
+                                        <h4>Product <span>Total</span></h4>
+                                        <ul>
+                                            @if (Model.BasketItems != null)
+                                            {
+                                                @foreach (var item in Model.BasketItems)
+                                                {
+                                                    double itemTotal = 0;
+                                                    itemTotal = (double)(item.Book.DiscountedPrice != null ? (item.Book.DiscountedPrice * item.Count) : (item.Book.Price * item.Count));
+                                                    total += itemTotal;
+                                                    <li>
+                                                        <span class="left">@item.Book.Name X @item.Count</span> <span class="right">
+                                                            $@itemTotal.ToString("0.##")
+                                                        </span>
+                                                    </li>
+                                                }
+                                            }
+                                        </ul>
+                                        <h4>Total <span>$@total.ToString("0.##")</span></h4>
+                                        
+                                        <button form="orderCreate" class="place-order w-100">Order</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+    

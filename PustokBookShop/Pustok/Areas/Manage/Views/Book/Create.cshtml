@@ -1,0 +1,162 @@
+﻿@model Book
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="p-5">
+    <div class="text-center">
+        <h1 class="h4 text-gray-900 mb-4">Create new Book</h1>
+    </div>
+    <form class="user" method="post" enctype="multipart/form-data">
+        <div class="form-group row justify-content-center">
+            <div class="col-sm-6 mb-3 mb-sm-0 text-center">
+                <input type="text" asp-for="Name" class="form-control form-control-user text-center" id="name" placeholder="Name">
+                <span class="danger-color" asp-validation-for="Name"></span>
+            </div>
+        </div>
+        <div class="form-group row justify-content-center">
+            <div class="col-sm-6 mb-3 mb-sm-0">
+                <label asp-for="CategoryId">Categories :</label>
+                <select class="form-control form-control-user p-3" style="height:65%" asp-for="CategoryId" asp-items="@(new SelectList(ViewBag.Categories, "Id","Name"))">
+                </select>
+                <span class="danger-color" asp-validation-for="CategoryId"></span>
+            </div>
+        </div>
+        <div class="form-group row justify-content-center">
+            <div class="col-sm-6 mb-3 mb-sm-0">
+                <label asp-for="AuthorId">Authors :</label>
+                <select class="form-control form-control-user p-3" style="height:65%" asp-for="AuthorId" asp-items="@(new SelectList(ViewBag.Authors, "Id","FullName"))">
+                </select>
+                <span class="danger-color" asp-validation-for="AuthorId"></span>
+            </div>
+        </div>
+        <div class="form-group row justify-content-center">
+            <div class="col-sm-6 mb-3 mb-sm-0">
+                <label asp-for="GenreId">Genres :</label>
+                <select class="form-control form-control-user p-3" style="height:65%" asp-for="GenreId" asp-items="@(new SelectList(ViewBag.Genres, "Id","Name"))">
+                </select>
+                <span class="danger-color" asp-validation-for="GenreId"></span>
+            </div>
+        </div>
+        <div class="form-group row justify-content-center">
+            <div class="col-sm-6 mb-3 mb-sm-0">
+                <label asp-for="PublisherId">Publishers :</label>
+                <select class="form-control form-control-user p-3" style="height:65%" asp-for="PublisherId" asp-items="@(new SelectList(ViewBag.Publishers, "Id","Name"))">
+                </select>
+                <span class="danger-color" asp-validation-for="PublisherId"></span>
+            </div>
+        </div>
+
+        <div class="form-group row justify-content-center">
+            <div class="col-md-6 d-flex justify-content-between">
+                <div class="col-sm-6 mb-3 mb-sm-0 text-center p-0 pr-1">
+                    <input type="text" asp-for="ProducingPrice" class="form-control form-control-user text-center" id="producingPrice" placeholder="Custom Price">
+                    <span class="danger-color" asp-validation-for="ProducingPrice"></span>
+                </div>
+                <div class="col-sm-6 mb-3 mb-sm-0 text-center p-0">
+                    <input type="text" asp-for="Price" class="form-control form-control-user text-center" id="price" placeholder="Price">
+                    <span class="danger-color" asp-validation-for="Price"></span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row justify-content-center">
+            <div class="col-md-6 d-flex justify-content-between">
+                <div class="col-sm-6 mb-3 mb-sm-0 text-center p-0 pr-1">
+                    <input type="text" asp-for="PublicationDate" class="form-control form-control-user text-center" id="date" placeholder="Publication Date (yyyy-MM-dd)">
+                    <span class="danger-color" asp-validation-for="PublicationDate"></span>
+                </div>
+                <div class="col-sm-6 mb-3 mb-sm-0 text-center p-0">
+                    <input type="text" asp-for="Code" class="form-control form-control-user text-center" id="code" placeholder="Product Code">
+                    <span class="danger-color" asp-validation-for="Code"></span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row justify-content-center">
+            <div class="col-md-6 row">
+                <div class="col-sm-5 mb-3 mb-sm-0 text-center d-flex justify-content-start align-items-center p-0 pr-1">
+                    <input style="width:10%; height:100%" type="checkbox" asp-for="IsAvailable" class="form-control form-control-user text-center mr-3" id="isAvailable">
+                    <label class="form-check-label" asp-for="IsAvailable">Availability</label>
+                    <span class="danger-color" asp-validation-for="IsAvailable"></span>
+                </div>
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                    <label asp-for="TagIds">Tags :</label>
+                    <select class="form-control form-control-user p-3" style="height: 65%; overflow-y: hidden; background-image: none;" asp-for="TagIds" asp-items="@(new SelectList(ViewBag.Tags, "Id","Name"))">
+                    </select>
+                    <span class="danger-color" asp-validation-for="TagIds"></span>
+                </div>
+                @*<div class="col-sm-6 mb-3 mb-sm-0 text-center d-flex justify-content-between align-items-center p-0">
+            <p class="mb-0">IsFeatured: </p>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="isFeatured" id="isF" value="true" checked>
+                <label class="form-check-label" for="isF">
+                    Is
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="isFeatured" id="notF" value="false">
+                <label class="form-check-label" for="notF">
+                    Not
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="isFeatured" id="nullF" value="null">
+                <label class="form-check-label" for="nullF">
+                    Null
+                </label>
+            </div>
+        </div>*@
+            </div>
+        </div>
+        <div class="form-group row justify-content-center">
+            <div class="col-sm-6 mb-3 mb-sm-0 text-center">
+                <textarea asp-for="Desc" class="form-control form-control-user text-center" id="description" placeholder="Description" rows="5"></textarea>
+                <span class="danger-color" asp-validation-for="Desc"></span>
+            </div>
+        </div>
+        <div class="form-group row justify-content-center">
+            <div class="col-sm-6 mb-3 mb-sm-0 text-left">
+                <label class="custom-file-label form-control-user d-flex align-items-center justify-content-between" id="lblImageFile" asp-for="PosterImage">
+                    <span class="choose-span">Choose Poster Image...</span>
+                    <span class="browse">
+                        <span class="browse-text">Browse</span>
+                    </span>
+                    <input class="d-none" asp-for="PosterImage">
+                </label>
+                <span class="danger-color" asp-validation-for="PosterImage"></span>
+            </div>
+        </div>
+        <div class="form-group row justify-content-center">
+            <div class="col-sm-6 mb-3 mb-sm-0 text-left">
+                <label class="custom-file-label form-control-user d-flex align-items-center justify-content-between" id="lblImageFile" asp-for="HoverPosterImage">
+                    <span class="choose-span">Choose Hover Poster Image...</span>
+                    <span class="browse">
+                        <span class="browse-text">Browse</span>
+                    </span>
+                    <input class="d-none" asp-for="HoverPosterImage">
+                </label>
+                <span class="danger-color" asp-validation-for="HoverPosterImage"></span>
+            </div>
+        </div>
+        <div class="form-group row justify-content-center">
+            <div class="col-sm-6 mb-3 mb-sm-0 text-left">
+                <label class="custom-file-label form-control-user d-flex align-items-center justify-content-between" id="lblImageFile" asp-for="Images">
+                    <span class="choose-span">Choose Other Images...</span>
+                    <span class="browse">
+                        <span class="browse-text">Browse</span>
+                    </span>
+                    <input class="d-none" asp-for="Images">
+                </label>
+                <span class="danger-color" asp-validation-for="Images"></span>
+                @*<span class="danger-color" asp-validation-for="Image"></span>*@
+            </div>
+        </div>
+        <input class="d-none" type="number" step="0.01" value="0" asp-for="Rate" />
+        <div class="form-group row justify-content-center">
+            <button type="submit" class="btn btn-primary btn-user w-50">
+                Create
+            </button>
+        </div>
+
+    </form>
+</div>
+

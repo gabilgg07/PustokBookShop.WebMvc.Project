@@ -1,0 +1,89 @@
+﻿@model Author
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<div class="p-5">
+    <div class="text-center">
+        <h1 class="h4 text-gray-900 mb-4">Delete Author</h1>
+    </div>
+    <form class="user" method="post" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group row justify-content-center">
+                    <div class="col-sm-12 mb-3 mb-sm-0 text-center">
+                        <input type="text" asp-for="FullName" class="form-control form-control-user text-center">
+                        <span class="danger-color" asp-validation-for="FullName"></span>
+                    </div>
+                </div>
+                <div class="form-group row justify-content-center">
+                    <div class="col-sm-12 mb-3 mb-sm-0 text-center">
+                        <textarea asp-for="BioDesc" class="form-control form-control-user text-center" rows="5"></textarea>
+                        <span class="danger-color" asp-validation-for="BioDesc"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="image-poster">
+                    @if (Model?.Image != null)
+                    {
+                        <div class="image-wrapper position-relative">
+                            <img class="w-100" src="~/uploads/authors/@Model.Image" alt="@Model.FullName" />
+                        </div>
+                    }
+                    else
+                    {
+                        <h3 class="mt-2">Author have not poster image</h3>
+                    }
+
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group row justify-content-center mt-5">
+                    <h2 class="h4 danger-color">Are you sure?</h2>
+                </div>
+                <div class="form-group row justify-content-center">
+                    <button type="submit" class="btn btn-primary btn-user w-25">
+                        Yes, delete it!
+                    </button>
+                </div>
+                <div class="form-group row justify-content-center mt-2">
+                    <a asp-action="index" class="btn btn-danger btn-user w-25 d-flex justify-content-around">
+                        <span class="text">Cancel</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </form>
+    @*<form class="user" method="post">
+        <div class="form-group row justify-content-center">
+            <div class="col-sm-6 mb-3 mb-sm-0 text-center">
+                <input type="text" asp-for="@Model.FullName" class="form-control form-control-user text-center" id="name">
+                <span class="danger-color" asp-validation-for="@Model.FullName"></span>
+            </div>
+        </div>
+        <div class="form-group row justify-content-center">
+            <div class="col-sm-6 mb-3 mb-sm-0 text-center">
+                <textarea asp-for="@Model.BioDesc" class="form-control form-control-user text-center" id="bio" rows="5"></textarea>
+                <span class="danger-color" asp-validation-for="@Model.BioDesc"></span>
+            </div>
+        </div>
+        <div class="form-group row justify-content-center mt-5">
+            <h2 class="h4 danger-color">Are you sure?</h2>
+        </div>
+        <div class="form-group row justify-content-center">
+            <button type="submit" class="btn btn-primary btn-user w-25">
+                Yes, delete it!
+            </button>
+        </div>
+        <div class="form-group row justify-content-center mt-2">
+            <a asp-action="index" class="btn btn-danger btn-user w-25 d-flex justify-content-around">
+                <span class="text">Cancel</span>
+            </a>
+        </div>
+
+    </form>*@
+</div>
+

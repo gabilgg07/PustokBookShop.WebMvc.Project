@@ -1,0 +1,158 @@
+﻿@model Book
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<div class="p-5">
+    <div class="text-center">
+        <h1 class="h4 text-gray-900 mb-4">Delete Book</h1>
+    </div>
+    <form class="user" method="post">
+        <div class="row">
+            <div class="col-md-6 col-sm-12">
+                <div class="form-group row justify-content-center">
+                    <div class="col-sm-12 mb-3 mb-sm-0 text-center">
+                        <input type="text" asp-for="Name" class="form-control form-control-user text-center" id="name" placeholder="Name">
+                        <span class="danger-color" asp-validation-for="Name"></span>
+                    </div>
+                </div>
+                <div class="form-group row justify-content-center">
+                    <div class="col-sm-12 mb-3 mb-sm-0">
+                        <label asp-for="CategoryId">Categories :</label>
+                        <select class="form-control form-control-user p-3" style="height:65%" asp-for="CategoryId" asp-items="@(new SelectList(ViewBag.Categories, "Id","Name"))">
+                        </select>
+                        <span class="danger-color" asp-validation-for="CategoryId"></span>
+                    </div>
+                </div>
+                <div class="form-group row justify-content-center">
+                    <div class="col-sm-12 mb-3 mb-sm-0">
+                        <label asp-for="AuthorId">Authors :</label>
+                        <select class="form-control form-control-user p-3" style="height:65%" asp-for="AuthorId" asp-items="@(new SelectList(ViewBag.Authors, "Id","FullName"))">
+                        </select>
+                        <span class="danger-color" asp-validation-for="AuthorId"></span>
+                    </div>
+                </div>
+                <div class="form-group row justify-content-center">
+                    <div class="col-sm-12 mb-3 mb-sm-0">
+                        <label asp-for="GenreId">Genres :</label>
+                        <select class="form-control form-control-user p-3" style="height:65%" asp-for="GenreId" asp-items="@(new SelectList(ViewBag.Genres, "Id","Name"))">
+                        </select>
+                        <span class="danger-color" asp-validation-for="GenreId"></span>
+                    </div>
+                </div>
+                <div class="form-group row justify-content-center">
+                    <div class="col-sm-12 mb-3 mb-sm-0">
+                        <label asp-for="PublisherId">Publishers :</label>
+                        <select class="form-control form-control-user p-3" style="height:65%" asp-for="PublisherId" asp-items="@(new SelectList(ViewBag.Publishers, "Id","Name"))">
+                        </select>
+                        <span class="danger-color" asp-validation-for="PublisherId"></span>
+                    </div>
+                </div>
+                <div class="form-group row justify-content-center">
+                    <div class="col-md-12 d-flex justify-content-between">
+                        <div class="col-sm-6 mb-3 mb-sm-0 text-center p-0 pr-1">
+                            <input type="text" asp-for="ProducingPrice" class="form-control form-control-user text-center" id="producingPrice" placeholder="Custom Price">
+                            <span class="danger-color" asp-validation-for="ProducingPrice"></span>
+                        </div>
+                        <div class="col-sm-6 mb-3 mb-sm-0 text-center p-0">
+                            <input type="text" asp-for="Price" class="form-control form-control-user text-center" id="price" placeholder="Price">
+                            <span class="danger-color" asp-validation-for="Price"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row justify-content-center">
+                    <div class="col-md-12 d-flex justify-content-between">
+                        <div class="col-sm-6 mb-3 mb-sm-0 text-center p-0 pr-1">
+                            <input type="text" asp-for="PublicationDate" class="form-control form-control-user text-center" id="date" placeholder="Publication Date (yyyy-MM-dd)">
+                            <span class="danger-color" asp-validation-for="PublicationDate"></span>
+                        </div>
+                        <div class="col-sm-6 mb-3 mb-sm-0 text-center p-0">
+                            <input type="text" asp-for="Code" class="form-control form-control-user text-center" id="code" placeholder="Product Code">
+                            <span class="danger-color" asp-validation-for="Code"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row justify-content-center">
+                    <div class="col-sm-12 mb-3 mb-sm-0 text-center d-flex justify-content-start align-items-center">
+                        <input style="width:5%;height:100%" type="checkbox" asp-for="IsAvailable" class="form-control form-control-user text-center mr-3" id="isAvailable">
+                        <label class="form-check-label" asp-for="IsAvailable">Availability</label>
+                        <span class="danger-color" asp-validation-for="IsAvailable"></span>
+                    </div>
+                </div>
+                <div class="form-group row justify-content-center">
+                    <div class="col-sm-12 mb-3 mb-sm-0 text-center">
+                        <textarea asp-for="Desc" class="form-control form-control-user text-center" id="description" placeholder="Description" rows="5"></textarea>
+                        <span class="danger-color" asp-validation-for="Desc"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <div class="row align-items-center">
+                    @{
+                        BookImage poster = Model.BookImages.FirstOrDefault(x => x.PosterStatus == true);
+                        BookImage hoverPoster = Model.BookImages.FirstOrDefault(x => x.PosterStatus == false);
+                        List<BookImage> images = Model.BookImages.Where(x => x.PosterStatus == null).ToList();
+                    }
+                    <div class="col-md-6 col-sm-12">
+                        <h4 class="text-center">Poster Image</h4>
+                        <div class="image-poster">
+                            @if (poster != null)
+                            {
+                                <div class="image-wrapper position-relative d-flex justify-content-center align-items-center mb-1" style="height:400px">
+                                    <img class="w-100" src="~/uploads/books/@poster.Image" />
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <h4 class="text-center">Hover Poster Image</h4>
+                        <div class="image-poster">
+                            @if (hoverPoster != null)
+                            {
+                                <div class="image-wrapper position-relative d-flex justify-content-center align-items-center m-1" style="height:400px">
+                                    <img class="w-100" src="~/uploads/books/@hoverPoster.Image" />
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 row mt-4">
+                        @if (images != null)
+                        {
+                        <div class="col-12">
+                            <h4 class="text-center">Other Images</h4>
+                        </div>
+                            foreach (var item in images)
+                            {
+                                <div class="col-md-3 col-sm-12">
+                                    <div class="image-poster">
+                                        <div class="image-wrapper position-relative d-flex justify-content-center align-items-center m-1" style="height:150px">
+                                            <img class="w-100" src="~/uploads/books/@item.Image" />
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group row justify-content-center mt-5">
+            <h2 class="h4 danger-color">Are you sure?</h2>
+        </div>
+        <div class="form-group row justify-content-center">
+            <button type="submit" class="btn btn-primary btn-user w-25">
+                Yes, delete it!
+            </button>
+        </div>
+        <div class="form-group row justify-content-center mt-2">
+            <a asp-action="index" class="btn btn-danger btn-user w-25 d-flex justify-content-around">
+                <span class="text">Cancel</span>
+            </a>
+        </div>
+
+    </form>
+</div>
+
+
+

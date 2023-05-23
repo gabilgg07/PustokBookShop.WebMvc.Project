@@ -1,0 +1,144 @@
+﻿@model Order
+@{
+    ViewData["Title"] = "OrderDetail";
+}
+
+<div class=""></div>
+<div class="page-section inner-page-sec-padding-bottom">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-warning shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                            CreateAt
+                                        </div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-600">@Model.CreatedAt.ToString("HH:mm dd.MM.yyyy")</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-clock fa-2x text-warning opasity-3"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @if (Model.Status != null)
+                    {
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-@(Model.Status==true? "success": "danger") shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-@(Model.Status==true? "success": "danger") text-uppercase mb-1">
+                                                Status
+                                            </div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-600">@(Model.Status==true? "Accepted": "Rejected")</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-@(Model.Status==true? "check-square text-success": "window-close text-danger")  fa-2x opasity-3"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-warning shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                Status
+                                            </div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-600">Pending</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-question text-warning fa-2x opasity-3"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    @if (Model.Note != null)
+                    {
+                        <div class="col-xl-12 col-md-6 mb-4">
+                            <div class="card border-left-dark shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">
+                                                User Note
+                                            </div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-600">@Model.Note</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-address-card fa-2x text-dark opasity-3"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    @if (Model.AdminNote != null)
+                    {
+                        <div class="col-xl-12 col-md-6 mb-4">
+                            <div class="card border-left-primary shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                User Note
+                                            </div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-600">@Model.AdminNote</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-address-card fa-2x text-primary opasity-3"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+            <div class="col-xl-12 col-md-6 mb-4">
+                <div class="card border-left-warning shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                    OrderItems
+                                </div>
+                                @foreach (var item in Model.OrderItems)
+                                {
+                            <div class="h5 mb-0 font-weight-bold text-gray-600 d-flex justify-content-between">
+                                <div class="col-8 text-dark"><strong>@item.Book.Name</strong></div>
+                                <div class="col-2"> x @item.Count</div>
+                                <div class="col-2 text-right">@(item.Book.DiscountedPrice!=null? item.Book.DiscountedPrice:item.Book.Price)</div>
+                            </div>
+                                    <hr />
+                                }
+                                <div class="h5 mb-0 font-weight-bold text-gray-600 d-flex justify-content-between">
+                                    <div class="col-8 text-dark"><strong>TOTAL</strong></div>
+                                    <div class="col-4 text-right">@(Model.TotalPrice.ToString("0.##"))</div>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-clipboard-list fa-2x text-warning opasity-3"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

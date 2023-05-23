@@ -1,0 +1,81 @@
+﻿@inject Microsoft.AspNetCore.Identity.UserManager<AppUser> userM
+@model ChatVM
+@{
+    ViewData["Title"] = "Chat";
+
+    AppUser user = userM.FindByNameAsync(User.Identity.Name).Result;
+    List<AppUser> users = userM.Users.Where(x => x.IsAdmin == false && x.UserName != User.Identity.Name && x.ConnectionId!=null).ToList();
+}
+
+<main class="page-section inner-page-sec-padding-bottom">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-xs-12 col-lg-6 mb--30 mb-lg--0">
+                <div class="login-form">
+                    <div class="row">
+                        <div class="col-6">
+                            <h4 class="login-title">Chat</h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-12 mb--15">
+                            <div id="fullname">
+                                <span>FullName:</span>
+                                <h3 id="userFullname">@user.FullName</h3>
+                            </div>
+                        </div>
+                        <div class="col-12 mb--20">
+                            <div id="chatUser">
+                                <span>Message Sending To:</span>
+                                <h3>
+                                    All Users
+                                </h3>
+                            </div>
+                        </div>
+                        <div class="col-12 mb--20">
+                            <label for="message">Message</label>
+                            <input class="mb-0 form-control" name="message" id="message" placeholder="Enter Your Message">
+                        </div>
+                        <div class="col-md-12 mb--10">
+                            <a asp-action="chatmessage" class="btn btn-outlined" id="sendChatMessage">Send</a>
+                        </div>
+                        <div class="col-12 mb--20">
+                            <ul id="messageList" class="list-group">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-12 col-xs-12 col-lg-6 mb--30 mb-lg--0">
+                <div class="login-form">
+                    <div class="col-6">
+                        <h4 class="login-title">Users:</h4>
+                    </div>
+                    <div id="usersList">
+                        <ul class="list-group">
+                            <li class="list-group-item mb-0">
+                                <a href="" data-connectionId="">
+                                    All Users
+                                </a>
+                            </li>
+                            @foreach (var item in users)
+                            {
+                                <li class="list-group-item mb-0">
+                                    <a href="#" data-userId="@item.Id" data-connectionId="@item.ConnectionId">
+                                        @item.FullName
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+@section Scripts{
+    <script src="~/js/signalr/dist/browser/signalr.min.js"></script>
+    <script src="~/js/chating.js"></script>
+}
+

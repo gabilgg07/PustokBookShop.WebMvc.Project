@@ -1,0 +1,25 @@
+﻿@model Publisher
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="p-5">
+    <div class="text-center">
+        <h1 class="h4 text-gray-900 mb-4">Create new Publisher</h1>
+    </div>
+    <form class="user" method="post">
+        <div class="form-group row justify-content-center">
+            <div class="col-sm-6 mb-3 mb-sm-0 text-center">
+                <input type="text" asp-for="@Model.Name" class="form-control form-control-user text-center" id="name" placeholder="Publisher Name">
+                <span class="danger-color" asp-validation-for="@Model.Name"></span>
+            </div>
+        </div>
+        <div class="form-group row justify-content-center">
+            <button type="submit" class="btn btn-primary btn-user w-50">
+                Create
+            </button>
+        </div>
+
+    </form>
+</div>
+

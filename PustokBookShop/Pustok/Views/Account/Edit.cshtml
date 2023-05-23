@@ -1,0 +1,213 @@
+﻿@model UserUpdateVM
+@{
+    ViewData["Title"] = "Edit";
+    int ord = 4;
+}
+
+<main class="page-section inner-page-sec-padding-bottom">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-xs-12 col-lg-6 mb--30 mb-lg--0">
+                <!-- Login Form s-->
+                <form method="post">
+                    <div class="login-form">
+
+                        <div class="row">
+                            <div class="col-6">
+                                <h4 class="login-title">Edit User Parametrs</h4>
+                            </div>
+                            <div class="col-6">
+                                <a asp-controller="account" asp-action="changepassword" class="btn btn-outline-warning">Change Password</a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-12 mb--15">
+                                <label asp-for="FullName">Full Name</label>
+                                <input class="mb-0 form-control" asp-for="FullName" placeholder="Enter your full name">
+                                <span class="text-danger" asp-validation-for="FullName"></span>
+                            </div>
+                            <div class="col-12 mb--20">
+                                <label asp-for="Email">Email</label>
+                                <input class="mb-0 form-control" asp-for="Email" placeholder="Enter Your Email Address Here..">
+                                <span class="text-danger" asp-validation-for="Email"></span>
+                            </div>
+                            <div class="col-12 mb--20">
+                                <label asp-for="UserName">Username</label>
+                                <input class="mb-0 form-control" asp-for="UserName" placeholder="Enter Your Username">
+                                <span class="text-danger" asp-validation-for="UserName"></span>
+                            </div>
+                            <div class="col-12 mb--20">
+                                <label asp-for="Country">Country</label>
+                                <input class="mb-0 form-control" asp-for="Country" placeholder="Enter Your Country">
+                                <span class="text-danger" asp-validation-for="Country"></span>
+                            </div>
+                            <div class="col-12 mb--20">
+                                <label asp-for="City">City</label>
+                                <input class="mb-0 form-control" asp-for="City" placeholder="Enter Your City">
+                                <span class="text-danger" asp-validation-for="City"></span>
+                            </div>
+                            <div class="col-12 mb--20">
+                                <label asp-for="State">State</label>
+                                <input class="mb-0 form-control" asp-for="State" placeholder="Enter Your State">
+                                <span class="text-danger" asp-validation-for="State"></span>
+                            </div>
+                            <div class="col-12 mb--20">
+                                <label asp-for="Address">Address</label>
+                                <input class="mb-0 form-control" asp-for="Address" placeholder="Enter Your Address">
+                                <span class="text-danger" asp-validation-for="Address"></span>
+                            </div>
+                            <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-outlined">Edit</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            @if (Model.Orders != null)
+            {
+                <div class="col-sm-12 col-md-12 col-xs-12 col-lg-6 mb--30 mb-lg--0">
+                    <div class="orders login-form">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>CreateAt</th>
+                                    <th>Book Count</th>
+                                    <th>Total Price</th>
+                                    <th>Status</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Orders)
+                                {
+                                    <tr>
+                                        <th scope="row">@(ViewBag.SelectedPage*5-ord)</th>
+                                        <td>@item.CreatedAt.ToString("HH:mm dd.MM.yyyy")</td>
+                                        <td>@item.OrderItems.Count</td>
+                                        <td>@item.TotalPrice.ToString("0.##")</td>
+                                        <td>
+                                            @if (item.Status == null)
+                                            {
+                                                <span class="badge badge-warning">Pending</span>
+                                            }
+                                            else if (item.Status == true)
+                                            {
+                                                <span class="badge badge-success">Accepting</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge badge-danger">Rejecting</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            <a asp-action="orderdetail" asp-route-id="@item.Id" asp-route-page="@ViewBag.SelectedPage" class="btn btn-warning p-0 px-3 h-50" style="min-height:35px">
+                                                Detail
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    ord--;
+                                }
+                            </tbody>
+                        </table>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-5">
+                                @if ((ViewBag.SelectedPage * 5 - 4) != ViewBag.TotalOrders)
+                                {
+                                    <div class="dataTables_info">
+                                        Showing @(ViewBag.SelectedPage*5-4)  to  @(ViewBag.SelectedPage*5<ViewBag.TotalOrders ? ViewBag.SelectedPage * 5:ViewBag.TotalOrders) of @ViewBag.TotalOrders entries
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="dataTables_info">
+                                        Showing @(ViewBag.SelectedPage*5-4) of @ViewBag.TotalOrders entries
+                                    </div>
+                                }
+                            </div>
+                            <div class="col-sm-12 col-md-7">
+                                <div class="dataTables_paginate paging_simple_numbers">
+                                    <ul class="pagination">
+                                        <li class="paginate_button page-item @(ViewBag.SelectedPage==1?"disabled":"")">
+                                            <a asp-action="edit" asp-route-page="1" class="page-link"> <i class="fas fa-fast-backward"></i> </a>
+                                        </li>
+                                        <li class="paginate_button page-item previous @(ViewBag.SelectedPage<=3?"disabled":"")">
+                                            <a asp-action="edit" asp-route-page="@(ViewBag.SelectedPage-3)" class="page-link">Previous</a>
+                                        </li>
+
+                                        @if (ViewBag.SelectedPage == 1)
+                                        {
+                                            @if (ViewBag.TotalPages >= 3)
+                                            {
+                                                <li class="active paginate_button page-item"><a asp-action="edit" asp-route-page="1" class="page-link">1</a></li>
+                                                <li class="paginate_button page-item"><a asp-action="edit" asp-route-page="2" class="page-link">2</a></li>
+                                                <li class="paginate_button page-item"><a asp-action="edit" asp-route-page="3" class="page-link">3</a></li>
+                                            }
+                                            else if (ViewBag.TotalPages == 2)
+                                            {
+                                                <li class="active paginate_button page-item"><a asp-action="edit" asp-route-page="1" class="page-link">1</a></li>
+                                                <li class="paginate_button page-item"><a asp-action="edit" asp-route-page="2" class="page-link">2</a></li>
+                                            }
+                                            else
+                                            {
+                                                <li class="active paginate_button page-item"><a asp-action="edit" asp-route-page="1" class="page-link">1</a></li>
+                                            }
+
+                                        }
+                                        else if (ViewBag.SelectedPage == ViewBag.TotalPages)
+                                        {
+                                            @if (ViewBag.TotalPages >= 3)
+                                            {
+                                                <li class="paginate_button page-item"><a asp-action="edit" asp-route-page="@(ViewBag.TotalPages-2)" class="page-link">@(ViewBag.TotalPages-2)</a></li>
+                                                <li class="paginate_button page-item"><a asp-action="edit" asp-route-page="@(ViewBag.TotalPages-1)" class="page-link">@(ViewBag.TotalPages-1)</a></li>
+                                                <li class="active paginate_button page-item"><a asp-action="edit" asp-route-page="@ViewBag.TotalPages" class="page-link">@ViewBag.TotalPages</a></li>
+                                            }
+                                            else if (ViewBag.TotalPages == 2)
+                                            {
+                                                <li class="paginate_button page-item"><a asp-action="edit" asp-route-page="@(ViewBag.TotalPages-1)" class="page-link">@(ViewBag.TotalPages-1)</a></li>
+                                                <li class="active paginate_button page-item"><a asp-action="edit" asp-route-page="@ViewBag.TotalPages" class="page-link">@ViewBag.TotalPages</a></li>
+                                            }
+                                            else
+                                            {
+                                                <li class="active paginate_button page-item"><a asp-action="edit" asp-route-page="@ViewBag.TotalPages" class="page-link">@ViewBag.TotalPages</a></li>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            @if (ViewBag.TotalPages >= 3)
+                                            {
+                                                <li class="paginate_button page-item"><a asp-action="edit" asp-route-page="@(ViewBag.SelectedPage-1)" class="page-link">@(ViewBag.SelectedPage-1)</a></li>
+                                                <li class="active paginate_button page-item"><a asp-action="edit" asp-route-page="@ViewBag.SelectedPage" class="page-link">@ViewBag.SelectedPage</a></li>
+                                                <li class="paginate_button page-item"><a asp-action="edit" asp-route-page="@(ViewBag.SelectedPage+1)" class="page-link">@(ViewBag.SelectedPage+1)</a></li>
+                                            }
+                                            else if (ViewBag.TotalPages == 2)
+                                            {
+                                                <li class="paginate_button page-item"><a asp-action="edit" asp-route-page="@(ViewBag.SelectedPage-1)" class="page-link">@(ViewBag.SelectedPage-1)</a></li>
+                                                <li class="active paginate_button page-item"><a asp-action="edit" asp-route-page="@ViewBag.SelectedPage" class="page-link">@ViewBag.SelectedPage</a></li>
+                                            }
+                                            else
+                                            {
+                                                <li class="active paginate_button page-item"><a asp-action="edit" asp-route-page="@ViewBag.SelectedPage" class="page-link">@ViewBag.SelectedPage</a></li>
+                                            }
+
+                                        }
+
+                                        <li class="paginate_button page-item next @(ViewBag.SelectedPage>ViewBag.TotalPages-3?"disabled":"")">
+                                            <a asp-action="edit" asp-route-page="@(ViewBag.SelectedPage+3)" class="page-link">Next</a>
+                                        </li>
+                                        <li class="paginate_button page-item @(ViewBag.SelectedPage==ViewBag.TotalPages?"disabled":"")">
+                                            <a asp-action="edit" asp-route-page="@ViewBag.TotalPages" class="page-link"><i class="fas fa-fast-forward"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</main>
+

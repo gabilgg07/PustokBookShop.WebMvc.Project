@@ -1,0 +1,266 @@
+﻿
+.danger-color {
+    color: #e74a3b;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+#glass-cards {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: rgb(58 59 69);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+    #glass-cards::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(#e01515d9, #d7e22da1);
+        clip-path: circle(24% at 98% 87%);
+    }
+
+    #glass-cards::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(#a1f5d5bf, #1736ffb8);
+        clip-path: circle(19% at 4% 17%);
+    }
+
+.glass-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 1200px;
+    flex-wrap: wrap;
+    z-index: 1;
+}
+
+    .glass-container .glass-card {
+        position: relative;
+        width: 500px;
+        height: 370px;
+        margin: 30px;
+        box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.5);
+        border-radius: 15px;
+        background: rgba(1, 2, 37, 0.44);
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-top: 1px solid rgba(255, 255, 255, 0.5);
+        border-left: 1px solid rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(5px);
+    }
+
+        .glass-container .glass-card.image-card {
+            background: rgba(1, 2, 37, 0.44);
+        }
+
+        .glass-container .glass-card .glass-content {
+            padding: 20px;
+            transition: 0.5s;
+        }
+
+            .glass-container .glass-card .glass-content h2 {
+                position: absolute;
+                top: -20px;
+                right: 30px;
+                font-size: 8em;
+                color: rgba(255, 255, 255, 0.15);
+                pointer-events: none;
+            }
+
+            .glass-container .glass-card .glass-content h3 {
+                font-size: 1.8em;
+                color: #fff;
+                z-index: 1;
+            }
+
+            .glass-container .glass-card .glass-content p {
+                font-size: 1em;
+                color: #fff;
+                font-weight: 300;
+            }
+
+                .glass-container .glass-card .glass-content p i {
+                    color: #74748c;
+                    background-color: rgb(255 255 255 / 52%);
+                    padding: 1px 2px;
+                    border: 1px solid rgb(0 0 0 / 63%);
+                    border-radius: 4px;
+                    margin-bottom: 1px;
+                    display: inline-block;
+                }
+
+            .glass-container .glass-card .glass-content a {
+                position: relative;
+                display: inline-block;
+                padding: 8px 20px;
+                margin-top: 15px;
+                background: #ffffff69;
+                color: #000000c4;
+                border-radius: 20px;
+                text-decoration: none;
+                font-weight: 500;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            }
+
+                .glass-container .glass-card .glass-content a:hover {
+                    background: #ffffff;
+                    color: #000000;
+                }
+
+.opasity-1 {
+    opacity: 0.1;
+}
+
+.opasity-2 {
+    opacity: 0.2;
+}
+
+.opasity-3 {
+    opacity: 0.3;
+}
+
+.opasity-4 {
+    opacity: 0.4;
+}
+
+.opasity-5 {
+    opacity: 0.5;
+}
+
+.opasity-6 {
+    opacity: 0.6;
+}
+
+.opasity-7 {
+    opacity: 0.7;
+}
+
+.opasity-8 {
+    opacity: 0.8;
+}
+
+.opasity-9 {
+    opacity: 0.9;
+}
+
+.text-star {
+    color: rgb(253, 222, 1);
+}
+
+.fa-1_1 {
+    font-size: 1.1em;
+}
+
+.bg-linear-primary {
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,91,121,1) 53%, rgba(0,212,255,1) 100%);
+}
+
+label#lblImageFile {
+    position: static;
+    margin-bottom: 0;
+}
+
+    label#lblImageFile::after {
+        display: none;
+    }
+
+    label#lblImageFile span.browse {
+        background-color: #eaecf4;
+        display: flex;
+        width: 100px;
+        height: 50px;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        left: 20px;
+    }
+
+.image-poster .image-wrapper {
+    border: 2px solid #d1d3e2;
+    border-radius: 25px;
+    overflow: hidden;
+}
+
+span#deleteImage {
+    top: 10px;
+    right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #e2e1e1eb;
+    border-radius: 50%;
+    background-color: #5e6d6dbf;
+    pointer-events: painted;
+}
+
+    span#deleteImage:hover {
+        background-color: #425050cc;
+    }
+
+    span#deleteImage i {
+        color: #e2e1e1eb;
+        font-size: 1em;
+    }
+
+    span#deleteImage:hover i {
+        color: #ebe7e7fa;
+    }
+
+.overflow-def{
+    overflow:visible!important;
+}
+
+.tooltip-inner {
+    max-width: 350px;
+    background-color: #4e73df;
+}
+
+.tooltip-arrow::before {
+    /*border-color: #4e73df!important;*/
+}
+.bs-tooltip-auto[x-placement^=bottom] .tooltip-arrow::before,
+.bs-tooltip-bottom .tooltip-arrow::before {
+    border-bottom-color: #4e73df !important;
+}
+
+.bs-tooltip-auto[x-placement^=top] .tooltip-arrow::before,
+.bs-tooltip-top .tooltip-arrow::before {
+    border-top-color: #4e73df !important;
+}
+
+.bs-tooltip-auto[x-placement^=right] .tooltip-arrow::before,
+.bs-tooltip-right .tooltip-arrow::before {
+    border-right-color: #4e73df !important;
+}
+
+.bs-tooltip-auto[x-placement^=left] .tooltip-arrow::before,
+.bs-tooltip-left .tooltip-arrow::before {
+    border-left-color: #4e73df !important;
+}

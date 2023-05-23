@@ -1,0 +1,56 @@
+﻿
+@model List<Book>
+
+@foreach (var item in Model)
+{
+    <div class="single-slide">
+        <div style="height:500px" class="product-card d-flex flex-column justify-content-between">
+            <div class="product-header">
+                <a href="#" class="author">
+                    @item.Author.FullName
+                </a>
+                <h3>
+                    <a asp-controller="book" asp-action="detail" asp-route-id="@item.Id">
+                        @item.Name
+                    </a>
+                </h3>
+            </div>
+            <div class="product-card--body">
+                <div class="card-image">
+                    <img style="height:330px; width:250px; margin:auto" src="~/image/products/@item.BookImages.FirstOrDefault(i=>i.PosterStatus==true)?.Image" alt="">
+                    <div class="hover-contents">
+                        <a asp-controller="book" asp-action="detail" asp-route-id="@item.Id" class="hover-image">
+                            <img style="height:330px; width:250px; margin:auto" src="~/image/products/@item.BookImages.FirstOrDefault(i=>i.PosterStatus==false)?.Image" alt="">
+                        </a>
+                        <div class="hover-btns">
+                            <a asp-controller="book" asp-action="addtobasket" asp-route-id="@item.Id" class="single-btn add-basket">
+                                <i class="fas fa-shopping-basket"></i>
+                            </a>
+                            <a href="wishlist.html" class="single-btn">
+                                <i class="fas fa-heart"></i>
+                            </a>
+                            <a href="compare.html" class="single-btn">
+                                <i class="fas fa-random"></i>
+                            </a>
+                            <a asp-controller="book" asp-action="getdetailebook" asp-route-id="@item.Id" class="single-btn show-book-modal">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="price-block">
+                    @if (item.CampaignBooks.FirstOrDefault()?.Campaign.DiscountPercent == null)
+                    {
+                        <span class="price">£@item.Price</span>
+                    }
+                    else
+                    {
+                        <span class="price">£@((item.Price - item.Price * item.CampaignBooks.FirstOrDefault()?.Campaign.DiscountPercent / 100)?.ToString("#.##"))</span>
+                        <del class="price-old">£@item.Price</del>
+                        <span class="price-discount">@item.CampaignBooks.FirstOrDefault()?.Campaign.DiscountPercent%</span>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,62 @@
+﻿@model Slider
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="p-5">
+    <div class="text-center">
+        <h1 class="h4 text-gray-900 mb-4">Create new Slider</h1>
+    </div>
+    <form class="user" method="post" enctype="multipart/form-data">
+        <div class="form-group row justify-content-center">
+            <div class="col-sm-6 mb-3 mb-sm-0 text-center">
+                <input type="text" asp-for="Title" class="form-control form-control-user text-center" placeholder="Title">
+                <span class="danger-color" asp-validation-for="Title"></span>
+            </div>
+        </div>
+        <div class="form-group row justify-content-center">
+            <div class="col-sm-6 mb-3 mb-sm-0 text-center">
+                <input type="text" asp-for="Subtitle" class="form-control form-control-user text-center" placeholder="Subtitle">
+                <span class="danger-color" asp-validation-for="Subtitle"></span>
+            </div>
+        </div>
+        <div class="form-group row justify-content-center">
+            <div class="col-sm-6 mb-3 mb-sm-0 text-left">
+                    <label class="custom-file-label form-control-user d-flex align-items-center justify-content-between" id="lblImageFile" asp-for="ImageFile">
+                        <span class="choose-span">Choose file...</span>
+                        <span class="browse">
+                            <span class="browse-text">Browse</span>
+                        </span>
+                        <input class="d-none" asp-for="ImageFile">
+                    </label>
+                    <span class="danger-color" asp-validation-for="ImageFile"></span>
+                    <span class="danger-color" asp-validation-for="Image"></span>
+            </div>
+        </div>
+        <div class="form-group row justify-content-center">
+            <div class="col-sm-6 mb-3 mb-sm-0 text-center">
+                <input type="text" asp-for="RedirectUrl" class="form-control form-control-user text-center" placeholder="Redirect Url">
+                <span class="danger-color" asp-validation-for="RedirectUrl"></span>
+            </div>
+        </div>
+        <div class="form-group row justify-content-center">
+            <div class="col-sm-6 mb-3 mb-sm-0 text-center">
+                <input type="text" asp-for="Order" class="form-control form-control-user text-center" placeholder="Order">
+                <span class="danger-color" asp-validation-for="Order"></span>
+            </div>
+        </div>
+        <div class="form-group row justify-content-center">
+            <div class="col-sm-6 mb-3 mb-sm-0 text-center">
+                <input type="text" asp-for="BtnText" class="form-control form-control-user text-center" placeholder="Button Text">
+                <span class="danger-color" asp-validation-for="BtnText"></span>
+            </div>
+        </div>
+        <div class="form-group row justify-content-center">
+            <button type="submit" class="btn btn-primary btn-user w-50">
+                Create
+            </button>
+        </div>
+
+    </form>
+</div>
+

@@ -1,0 +1,38 @@
+﻿@model Slider
+@{
+    ViewData["Title"] = "Detail";
+}
+
+
+<div class="container-fluid">
+    <div id="glass-cards" style="background-image: url(/uploads/sliders/@Model.Image);">
+        <div class="glass-container">
+            <div class="glass-card">
+                <div class="glass-content">
+                    <h2>@Model.Id</h2>
+                    <h3>@Model.Title</h3>
+                    <p>
+                        <i>Subtitle :</i>    @Model.Subtitle <br />
+                        <i>Image :</i>   @Model.Image <br />
+                        <i>Order :</i>   @Model.Order <br />
+                        <i>Redirect Url :</i>    @Model.RedirectUrl <br />
+                    </p>
+
+                    <a asp-action="index">Go To Sliders Table</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Plugins{
+    <script type="text/javascript" src="~/manage/js/vanilla-tilt.js"></script>
+    <script type="text/javascript">
+        VanillaTilt.init(document.querySelectorAll(".glass-card"), {
+            max: 25,
+            speed: 400,
+            glare: true,
+            "max-glare": 1,
+        });
+    </script>
+}

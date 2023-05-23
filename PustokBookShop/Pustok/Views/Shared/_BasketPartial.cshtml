@@ -1,0 +1,45 @@
+﻿@model BasketVM
+
+<div class="cart-total">
+    <span class="text-number">
+        @Model.Count
+    </span>
+    <span class="text-item">
+        Shopping Cart
+    </span>
+    <span class="price">
+        £ @Model.TotalPrice.ToString("0.00")
+        <i class="fas fa-chevron-down"></i>
+    </span>
+</div>
+<div class="cart-dropdown-block">
+    <div class=" single-cart-block ">
+        @foreach (var item in Model.BasketItemVMs)
+        {
+            <div class="cart-product">
+                <a asp-controller="book" asp-action="detail" asp-route-id="@item.Book?.Id" class="image text-center">
+                    <img style="max-width:90px;max-height:90px" src="~/image/products/@item.Book?.BookImages.FirstOrDefault(x=>x.PosterStatus==true).Image" alt="">
+                </a>
+                <div class="content">
+                    <h3 class="title">
+                        <a asp-controller="book" asp-action="detail" asp-route-id="@item.Book?.Id">
+                            @item.Book?.Name
+                        </a>
+                    </h3>
+                    <p class="price"><span class="qty">@item.Count ×</span> £ @(item.Book?.DiscountedPrice==null?item.Book.Price.ToString("0.00") : item.Book.DiscountedPrice?.ToString("#.##"))</p>
+                    <a asp-controller="book" asp-action="deletefrombasket" asp-route-id="@item.Book.Id" class="cross-btn"><i class="fas fa-times"></i></a>
+                </div>
+            </div>
+        }
+    </div>
+    <div class=" single-cart-block ">
+        <div class="btn-block">
+            <a href="#" class="btn">
+                View Cart <i class="fas fa-chevron-right"></i>
+            </a>
+            <a asp-controller="order" asp-action="checkout" class="btn btn--primary">
+                Check Out <i class="fas fa-chevron-right"></i>
+            </a>
+        </div>
+    </div>
+</div>

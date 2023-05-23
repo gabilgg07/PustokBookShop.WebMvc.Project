@@ -1,0 +1,65 @@
+﻿@model Author
+@{
+    ViewData["Title"] = "Update";
+}
+
+<div class="p-5">
+    <div class="text-center">
+        <h1 class="h4 text-gray-900 mb-4">Update Author</h1>
+    </div>
+    <form class="user" method="post" enctype="multipart/form-data">
+        <input type="hidden" value="@ViewBag.SelectedPage" name="selectedpage" />
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group row justify-content-center">
+                    <div class="col-sm-12 mb-3 mb-sm-0 text-center">
+                        <input type="text" asp-for="FullName" class="form-control form-control-user text-center">
+                        <span class="danger-color" asp-validation-for="FullName"></span>
+                    </div>
+                </div>
+                <div class="form-group row justify-content-center">
+                    <div class="col-sm-12 mb-3 mb-sm-0 text-center">
+                        <textarea asp-for="BioDesc" class="form-control form-control-user text-center" rows="5"></textarea>
+                        <span class="danger-color" asp-validation-for="BioDesc"></span>
+                    </div>
+                </div>
+                <div class="form-group row justify-content-center">
+                    <div class="col-sm-12 mb-3 mb-sm-0 text-left">
+                            <label class="custom-file-label form-control-user d-flex align-items-center justify-content-between" id="lblImageFile" asp-for="ImageFile">
+                                <span class="choose-span">Choose file...</span>
+                                <span class="browse">
+                                    <span class="browse-text">Browse</span>
+                                </span>
+                                <input asp-for="ImageFile" class="d-none">
+                            </label>
+                            <span class="danger-color text-center d-inline-block w-100" asp-validation-for="ImageFile"></span>
+                    </div>
+                </div>
+                <div class="form-group row justify-content-center">
+                    <button type="submit" class="btn btn-primary btn-user w-50">
+                        Update
+                    </button>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="image-poster">
+                    @if (Model?.Image != null)
+                    {
+                    <div class="image-wrapper position-relative">
+                        <span id="deleteImage" class="delete-image position-absolute"><i class="fas fa-times"></i></span>
+                        <img class="w-100" src="~/uploads/authors/@Model.Image" alt="@Model.FullName" />
+                        <input type="hidden" name="Image" value="@Model.Image" />
+                    </div>
+                    }
+                    else
+                    {
+                        <h3 class="mt-2">Have not image!</h3>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </form>
+    
+</div>

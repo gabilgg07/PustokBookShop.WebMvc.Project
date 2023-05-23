@@ -1,0 +1,363 @@
+﻿@model Book
+@{
+    ViewData["Title"] = "Detail";
+}
+
+
+<div class="container-fluid">
+    <div class="book-cards">
+        <div class="d-flex justify-content-between mb-3">
+            <h1 class="text-dark mb-0">Book Details Cards</h1>
+            <a asp-action="index" style="height:100%" class="btn btn-success btn-icon-split">
+                <span class="icon text-white-50">
+                    <i class="fas fa-hand-point-left"></i>
+                </span>
+                <span class="text">Back to Books Table</span>
+            </a>
+        </div>
+        <div class="row">
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    Name
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-600">@Model.Name</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-bookmark fa-2x text-primary opasity-3"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                    Author
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-600">@Model.Author?.FullName</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-feather-alt fa-2x text-success opasity-3"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-info shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                    Product Code
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-600">@Model.Code</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-qrcode fa-2x text-info opasity-3"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-dark shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">
+                                    Custom Price
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-600">$ @Model.ProducingPrice</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-dollar-sign fa-2x text-dark opasity-3"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-warning shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                    Price
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-600">$ @Model.Price</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-dollar-sign fa-2x text-warning opasity-3"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-danger shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                                    Discounted Price
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-600">$ @Model.DiscountedPrice</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-dollar-sign fa-2x text-danger opasity-3"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    Availability
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-600">@(Model.IsAvailable?"In Stock":"Out Stock")</div>
+                            </div>
+                            <div class="col-auto">
+                                @if (Model.IsAvailable)
+                                {
+                                    <i class="far fa-check-circle fa-2x text-success opasity-3"></i>
+                                }
+                                else
+                                {
+                                    <i class="far fa-times-circle fa-2x text-danger opasity-3"></i>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                    Publication Date
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-600">@Model.PublicationDate?.ToString("dd-MM-yyyy")</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-calendar-day fa-2x text-success opasity-3"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-info shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                    Rate
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-600">@Model.Rate?.ToString("0.00")</div>
+                            </div>
+                            <div class="col-auto">
+                                @if (Model.Rate != null)
+                                {
+                                    <div class="rating-block">
+                                        @{
+                                            int starRound = (int)Math.Round(Model.Rate.Value * 2);
+                                        }
+
+                                        @for (int i = 1; i <= 5; i++)
+                                        {
+                                            if (i <= (starRound / 2))
+                                            {
+                                                <i class="fas fa-star fa-1_1 text-star opasity-3"></i>
+                                            }
+                                            else if ((starRound % 2) == 1)
+                                            {
+                                                <i class="fas fa-star-half-alt fa-1_1 text-star opasity-3"></i>
+                                                {
+                                                    starRound--;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <i class="far fa-star fa-1_1 text-star opasity-3"></i>
+                                            }
+                                        }
+                                    </div>
+                                }
+                                else
+                                {
+                                    <i class="far fa-star fa-2x text-star opasity-3"></i>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-dark shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">
+                                    Genre
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-600">@Model.Genre?.Name</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-mask fa-2x text-dark opasity-3"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-warning shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                    Publisher
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-600">@Model.Publisher?.Name</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-print fa-2x text-warning opasity-3"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-danger shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                                    Category
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-600">@Model.Category?.Name</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-list-alt fa-2x text-danger opasity-3"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-12 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="d-flex justify-content-between mb-3">
+                                    <div class="h5 font-weight-bold text-primary text-uppercase mb-1">
+                                        Description
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-file-invoice fa-2x text-primary opasity-3"></i>
+                                    </div>
+                                </div>
+                                <div class="mb-0 text-gray-600">@Model.Desc</div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="table-books">
+        <h1>Book Details Table</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Properties</th>
+                    <th scope="col">Values</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>Name</td>
+                    <td>@Model.Name</td>
+                </tr>
+                <tr>
+                    <th scope="row">2</th>
+                    <td>Author</td>
+                    <td>@Model.Author?.FullName</td>
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td>Product Code</td>
+                    <td>@Model.Code</td>
+                </tr>
+                <tr>
+                    <th scope="row">4</th>
+                    <td>Custom Price</td>
+                    <td>@Model.ProducingPrice</td>
+                </tr>
+                <tr>
+                    <th scope="row">5</th>
+                    <td>Price</td>
+                    <td>@Model.Price</td>
+                </tr>
+                <tr>
+                    <th scope="row">6</th>
+                    <td>Discound Price</td>
+                    <td>@Model.DiscountedPrice</td>
+                </tr>
+                <tr>
+                    <th scope="row">7</th>
+                    <td>Availability</td>
+                    <td>@(Model.IsAvailable?"In Stock":"Out Stock")</td>
+                </tr>
+                <tr>
+                    <th scope="row">7</th>
+                    <td>Publication Date</td>
+                    <td>@Model.PublicationDate?.ToString("dd-MMMM-yyyy")</td>
+                </tr>
+                <tr>
+                    <th scope="row">8</th>
+                    <td>Rate</td>
+                    <td>@Model.Rate?.ToString("0.00")</td>
+                </tr>
+                <tr>
+                    <th scope="row">9</th>
+                    <td>Genre</td>
+                    <td>@Model.Genre?.Name</td>
+                </tr>
+                <tr>
+                    <th scope="row">10</th>
+                    <td>Publisher</td>
+                    <td>@Model.Publisher?.Name</td>
+                </tr>
+                <tr>
+                    <th scope="row">11</th>
+                    <td>Category</td>
+                    <td>@Model.Category?.Name</td>
+                </tr>
+                <tr>
+                    <th scope="row">12</th>
+                    <td>Description</td>
+                    <td>@Model.Desc</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+

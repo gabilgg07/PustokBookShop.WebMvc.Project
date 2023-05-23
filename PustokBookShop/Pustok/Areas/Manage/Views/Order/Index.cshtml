@@ -1,0 +1,182 @@
+﻿@model List<Order>
+@{
+    ViewData["Title"] = "Index";
+    int order = 1;
+}
+
+@section CustomStyle{
+    <!-- Custom styles for this page -->
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+}
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Book Authors</h6>
+    </div>
+    <div class="d-flex justify-content-end pb-0 card-body">
+        <a asp-action="create" class="btn btn-primary btn-icon-split">
+            <span class="icon text-white-50">
+                <i class="fas fa-plus-square"></i>
+            </span>
+            <span class="text">Add Author</span>
+        </a>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <div class="dataTables_wrapper dt-bootstrap4">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table class="table table-bordered dataTable" style="width: 100%;">
+                            <thead>
+                                <tr role="row">
+                                    <th class="pl-2 pr-2" style="width: 14px;">#</th>
+                                    <th style="width: 80px;">FullName</th>
+                                    <th style="width: 90px;">Book Count</th>
+                                    <th>Date</th>
+                                    <th>Total</th>
+                                    <th>Status</th>
+                                    <th>Button</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th class="pl-2 pr-2">#</th>
+                                    <th>FuulName</th>
+                                    <th>Book Count</th>
+                                    <th>Date</th>
+                                    <th>Total</th>
+                                    <th>Status</th>
+                                    <th>Cutton</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                <tr>
+                                    <td class="pl-2 pr-2">@(ViewBag.SelectedPage*2-order)</td>
+                                    <td class="pl-2 pr-2">@item.AppUser.FullName</td>
+                                    <td>@item.OrderItems.Count</td>
+                                    <td>@item.CreatedAt.ToString("HH:mm dd.MM.yyyy")</td>
+                                    <td>@item.TotalPrice.ToString("0.##")</td>
+                                    <td>
+
+                                        @if (item.Status == null)
+                                        {
+                                        <span class="badge badge-warning">Pending</span>
+                                        }
+                                        else if (item.Status == true)
+                                        {
+                                            <span class="badge badge-success">Accepting</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-danger">Rejecting</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <a asp-action="detail" asp-route-id="@item.Id" asp-route-page="@ViewBag.SelectedPage" class="btn btn-warning btn-icon-split w-100 mb-2  d-flex justify-content-between">
+                                            <span class="icon">
+                                                <i class="fas fa-check-circle"></i>
+                                            </span>
+                                            <span class="text text-center w-100">@(item.Status==null?"Edit":"Detail")</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                    order--;
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-5">
+                        <div class="dataTables_info">
+                            Showing @(ViewBag.SelectedPage*2-1) @(ViewBag.SelectedPage*2<=ViewBag.TotalAuthors ? ", " + (ViewBag.SelectedPage * 2): "") of @ViewBag.TotalAuthors entries
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-7">
+                        <div class="dataTables_paginate paging_simple_numbers">
+                            <ul class="pagination">
+                                <li class="paginate_button page-item @(ViewBag.SelectedPage==1?"disabled":"")">
+                                    <a asp-action="index" asp-route-page="1" class="page-link"> <i class="fas fa-fast-backward"></i> </a>
+                                </li>
+                                <li class="paginate_button page-item previous @(ViewBag.SelectedPage<=3?"disabled":"")">
+                                    <a asp-action="index" asp-route-page="@(ViewBag.SelectedPage-3)" class="page-link">Previous</a>
+                                </li>
+
+                                @if (ViewBag.SelectedPage == 1)
+                                {
+                                    @if (ViewBag.TotalPages >= 3)
+                                    {
+                                        <li class="active paginate_button page-item"><a asp-action="index" asp-route-page="1" class="page-link">1</a></li>
+                                        <li class="paginate_button page-item"><a asp-action="index" asp-route-page="2" class="page-link">2</a></li>
+                                        <li class="paginate_button page-item"><a asp-action="index" asp-route-page="3" class="page-link">3</a></li>
+                                    }
+                                    else if (ViewBag.TotalPages == 2)
+                                    {
+                                        <li class="active paginate_button page-item"><a asp-action="index" asp-route-page="1" class="page-link">1</a></li>
+                                        <li class="paginate_button page-item"><a asp-action="index" asp-route-page="2" class="page-link">2</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li class="active paginate_button page-item"><a asp-action="index" asp-route-page="1" class="page-link">1</a></li>
+                                    }
+
+                                }
+                                else if (ViewBag.SelectedPage == ViewBag.TotalPages)
+                                {
+                                    @if (ViewBag.TotalPages >= 3)
+                                    {
+                                        <li class="paginate_button page-item"><a asp-action="index" asp-route-page="@(ViewBag.TotalPages-2)" class="page-link">@(ViewBag.TotalPages-2)</a></li>
+                                        <li class="paginate_button page-item"><a asp-action="index" asp-route-page="@(ViewBag.TotalPages-1)" class="page-link">@(ViewBag.TotalPages-1)</a></li>
+                                        <li class="active paginate_button page-item"><a asp-action="index" asp-route-page="@ViewBag.TotalPages" class="page-link">@ViewBag.TotalPages</a></li>
+                                    }
+                                    else if (ViewBag.TotalPages == 2)
+                                    {
+                                        <li class="paginate_button page-item"><a asp-action="index" asp-route-page="@(ViewBag.TotalPages-1)" class="page-link">@(ViewBag.TotalPages-1)</a></li>
+                                        <li class="active paginate_button page-item"><a asp-action="index" asp-route-page="@ViewBag.TotalPages" class="page-link">@ViewBag.TotalPages</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li class="active paginate_button page-item"><a asp-action="index" asp-route-page="@ViewBag.TotalPages" class="page-link">@ViewBag.TotalPages</a></li>
+                                    }
+                                }
+                                else
+                                {
+                                    @if (ViewBag.TotalPages >= 3)
+                                    {
+                                        <li class="paginate_button page-item"><a asp-action="index" asp-route-page="@(ViewBag.SelectedPage-1)" class="page-link">@(ViewBag.SelectedPage-1)</a></li>
+                                        <li class="active paginate_button page-item"><a asp-action="index" asp-route-page="@ViewBag.SelectedPage" class="page-link">@ViewBag.SelectedPage</a></li>
+                                        <li class="paginate_button page-item"><a asp-action="index" asp-route-page="@(ViewBag.SelectedPage+1)" class="page-link">@(ViewBag.SelectedPage+1)</a></li>
+                                    }
+                                    else if (ViewBag.TotalPages == 2)
+                                    {
+                                        <li class="paginate_button page-item"><a asp-action="index" asp-route-page="@(ViewBag.SelectedPage-1)" class="page-link">@(ViewBag.SelectedPage-1)</a></li>
+                                        <li class="active paginate_button page-item"><a asp-action="index" asp-route-page="@ViewBag.SelectedPage" class="page-link">@ViewBag.SelectedPage</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li class="active paginate_button page-item"><a asp-action="index" asp-route-page="@ViewBag.SelectedPage" class="page-link">@ViewBag.SelectedPage</a></li>
+                                    }
+
+                                }
+
+                                <li class="paginate_button page-item next @(ViewBag.SelectedPage>ViewBag.TotalPages-3?"disabled":"")">
+                                    <a asp-action="index" asp-route-page="@(ViewBag.SelectedPage+3)" class="page-link">Next</a>
+                                </li>
+                                <li class="paginate_button page-item @(ViewBag.SelectedPage==ViewBag.TotalPages?"disabled":"")">
+                                    <a asp-action="index" asp-route-page="@ViewBag.TotalPages" class="page-link"><i class="fas fa-fast-forward"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,206 @@
+﻿@model List<Comment>
+@{
+    ViewData["Title"] = "Comment";
+    int order = 1;
+}
+
+@section CustomStyle{
+    <!-- Custom styles for this page -->
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+}
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Book Comments</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <div class="dataTables_wrapper dt-bootstrap4">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table class="table table-bordered dataTable" style="width: 100%;">
+                            <thead>
+                                <tr role="row">
+                                    <th class="pl-2 pr-2" style="width: 2%;">#</th>
+                                    <th style="width: 20%;">FullName</th>
+                                    <th style="width: 5%;">Rate</th>
+                                    <th style="width: 15%;">CreateAt</th>
+                                    <th style="width: 58%;">Text</th>
+                                    <th>Status</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th class="pl-2 pr-2">#</th>
+                                    <th>FullName</th>
+                                    <th>Rate</th>
+                                    <th>CreateAt</th>
+                                    <th>Text</th>
+                                    <th>Status</th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                <tr>
+                                    <td class="pl-2 pr-2">@(ViewBag.SelectedPage*2-order)</td>
+                                    <td>@item.AppUser.FullName</td>
+                                    <td>@item.Rate</td>
+                                    <td>@item.CreatedAt.ToString("HH:mm dd-MM-yyyy")</td>
+                                    @if (item.Text.Length < 25)
+                                    {
+                                        <td style="max-width: 300px">@item.Text</td>
+                                    }
+                                    else
+                                    {
+                                        <td style="max-width: 300px" data-bs-toggle="tooltip" data-bs-placement="auto" title="@item.Text">@item.Text.Substring(0, 25)... </td>
+                                    }
+                                <td>
+                                    @if (item.Status == null)
+                                    {
+                                        <span class="badge badge-warning">Pending</span>
+                                    }
+                                    else if (item.Status == true)
+                                    {
+                                        <span class="badge badge-success">Accepting</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-danger">Rejecting</span>
+                                    }
+                                </td>
+                                <td>
+                                    @if (item.Status == null)
+                                    {
+                                        <a asp-action="commentaccept" asp-route-bookId="@item.BookId" asp-route-id="@item.Id" class="btn btn-outline-success btn-icon-split w-100 mb-2  d-flex justify-content-between">
+                                            <span class="icon" style="background: #05963f45;">
+                                                <i class="fas fa-check-circle" style="color: #ffffffb3;"></i>
+                                            </span>
+                                            <span class="text text-center w-100">Accept</span>
+                                        </a>
+                                        <a asp-action="commentreject" asp-route-bookId="@item.BookId" asp-route-id="@item.Id" class="btn btn-outline-danger btn-icon-split w-100 item-delete  d-flex justify-content-between">
+                                            <span class="icon" style="background: #82240845;">
+                                                <i class="fas fa-times-circle" style="color: #ffffffb3;"></i>
+                                            </span>
+                                            <span class="text text-center w-100">Reject</span>
+                                        </a>
+                                    }
+                                    else if (item.Status == false)
+                                    {
+                                        <a asp-action="commentaccept" asp-route-bookId="@item.BookId" asp-route-id="@item.Id" class="btn btn-outline-success btn-icon-split w-100 mb-2  d-flex justify-content-between">
+                                            <span class="icon" style="background: #05963f45;">
+                                                <i class="fas fa-check-circle" style="color: #ffffffb3;"></i>
+                                            </span>
+                                            <span class="text text-center w-100">Accept</span>
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a asp-action="commentreject" asp-route-bookId="@item.BookId" asp-route-id="@item.Id" class="btn btn-outline-danger btn-icon-split w-100 item-delete  d-flex justify-content-between">
+                                            <span class="icon" style="background: #82240845;">
+                                                <i class="fas fa-times-circle" style="color: #ffffffb3;"></i>
+                                            </span>
+                                            <span class="text text-center w-100">Reject</span>
+                                        </a>
+                                    }
+
+                                </td>
+                                </tr>
+                                    order--;
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-5">
+                        <div class="dataTables_info">
+                            Showing @(ViewBag.SelectedPage*2-1) @(ViewBag.SelectedPage*2<=ViewBag.TotalComments ? ", " + (ViewBag.SelectedPage * 2): "") of @ViewBag.TotalComments entries
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-7">
+                        <div class="dataTables_paginate paging_simple_numbers">
+                            <ul class="pagination">
+                                <li class="paginate_button page-item @(ViewBag.SelectedPage==1?"disabled":"")">
+                                    <a asp-action="comment" asp-route-bookId="@ViewBag.BookId" asp-route-page="1" class="page-link"> <i class="fas fa-fast-backward"></i> </a>
+                                </li>
+                                <li class="paginate_button page-item previous @(ViewBag.SelectedPage<=3?"disabled":"")">
+                                    <a asp-action="comment" asp-route-bookId="@ViewBag.BookId" asp-route-page="@(ViewBag.SelectedPage-3)" class="page-link">Previous</a>
+                                </li>
+
+                                @if (ViewBag.SelectedPage == 1)
+                                {
+                                    @if (ViewBag.TotalPages >= 3)
+                                    {
+                                        <li class="active paginate_button page-item"><a asp-action="comment" asp-route-page="1" asp-route-bookId="@ViewBag.BookId" class="page-link">1</a></li>
+                                        <li class="paginate_button page-item"><a asp-action="comment" asp-route-page="2" asp-route-bookId="@ViewBag.BookId" class="page-link">2</a></li>
+                                        <li class="paginate_button page-item"><a asp-action="comment" asp-route-page="3" asp-route-bookId="@ViewBag.BookId" class="page-link">3</a></li>
+                                    }
+                                    else if (ViewBag.TotalPages == 2)
+                                    {
+                                        <li class="active paginate_button page-item"><a asp-action="comment" asp-route-page="1" asp-route-bookId="@ViewBag.BookId" class="page-link">1</a></li>
+                                        <li class="paginate_button page-item"><a asp-action="comment" asp-route-page="2" asp-route-bookId="@ViewBag.BookId" class="page-link">2</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li class="active paginate_button page-item"><a asp-action="comment" asp-route-page="1" asp-route-bookId="@ViewBag.BookId" class="page-link">1</a></li>
+                                    }
+
+                                }
+                                else if (ViewBag.SelectedPage == ViewBag.TotalPages)
+                                {
+                                    @if (ViewBag.TotalPages >= 3)
+                                    {
+                                        <li class="paginate_button page-item"><a asp-action="comment" asp-route-page="@(ViewBag.TotalPages-2)" asp-route-bookId="@ViewBag.BookId" class="page-link">@(ViewBag.TotalPages-2)</a></li>
+                                        <li class="paginate_button page-item"><a asp-action="comment" asp-route-page="@(ViewBag.TotalPages-1)" asp-route-bookId="@ViewBag.BookId" class="page-link">@(ViewBag.TotalPages-1)</a></li>
+                                        <li class="active paginate_button page-item"><a asp-action="comment" asp-route-page="@ViewBag.TotalPages" asp-route-bookId="@ViewBag.BookId" class="page-link">@ViewBag.TotalPages</a></li>
+                                    }
+                                    else if (ViewBag.TotalPages == 2)
+                                    {
+                                        <li class="paginate_button page-item"><a asp-action="comment" asp-route-page="@(ViewBag.TotalPages-1)" asp-route-bookId="@ViewBag.BookId" class="page-link">@(ViewBag.TotalPages-1)</a></li>
+                                        <li class="active paginate_button page-item"><a asp-action="comment" asp-route-page="@ViewBag.TotalPages" asp-route-bookId="@ViewBag.BookId" class="page-link">@ViewBag.TotalPages</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li class="active paginate_button page-item"><a asp-action="comment" asp-route-page="@ViewBag.TotalPages" asp-route-bookId="@ViewBag.BookId" class="page-link">@ViewBag.TotalPages</a></li>
+                                    }
+                                }
+                                else
+                                {
+                                    @if (ViewBag.TotalPages >= 3)
+                                    {
+                                        <li class="paginate_button page-item"><a asp-action="comment" asp-route-page="@(ViewBag.SelectedPage-1)" asp-route-bookId="@ViewBag.BookId" class="page-link">@(ViewBag.SelectedPage-1)</a></li>
+                                        <li class="active paginate_button page-item"><a asp-action="comment" asp-route-page="@ViewBag.SelectedPage" asp-route-bookId="@ViewBag.BookId" class="page-link">@ViewBag.SelectedPage</a></li>
+                                        <li class="paginate_button page-item"><a asp-action="comment" asp-route-page="@(ViewBag.SelectedPage+1)" asp-route-bookId="@ViewBag.BookId" class="page-link">@(ViewBag.SelectedPage+1)</a></li>
+                                    }
+                                    else if (ViewBag.TotalPages == 2)
+                                    {
+                                        <li class="paginate_button page-item"><a asp-action="comment" asp-route-page="@(ViewBag.SelectedPage-1)" asp-route-bookId="@ViewBag.BookId" class="page-link">@(ViewBag.SelectedPage-1)</a></li>
+                                        <li class="active paginate_button page-item"><a asp-action="comment" asp-route-page="@ViewBag.SelectedPage" asp-route-bookId="@ViewBag.BookId" class="page-link">@ViewBag.SelectedPage</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li class="active paginate_button page-item"><a asp-action="comment" asp-route-page="@ViewBag.SelectedPage" asp-route-bookId="@ViewBag.BookId" class="page-link">@ViewBag.SelectedPage</a></li>
+                                    }
+
+                                }
+
+                                <li class="paginate_button page-item next @(ViewBag.SelectedPage>ViewBag.TotalPages-3?"disabled":"")">
+                                    <a asp-action="comment" asp-route-page="@(ViewBag.SelectedPage+3)" asp-route-bookId="@ViewBag.BookId" class="page-link">Next</a>
+                                </li>
+                                <li class="paginate_button page-item @(ViewBag.SelectedPage==ViewBag.TotalPages?"disabled":"")">
+                                    <a asp-action="comment" asp-route-bookId="@ViewBag.BookId" asp-route-page="@ViewBag.TotalPages" class="page-link"><i class="fas fa-fast-forward"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
